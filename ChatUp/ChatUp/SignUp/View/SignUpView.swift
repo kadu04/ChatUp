@@ -57,28 +57,19 @@ struct SignUpView: View {
             Button {
                 viewModel.signUp()
             } label: {
-                Text("Enviar")
+                Text("Salvar")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color("GreenColor"))
                     .foregroundColor(Color.white)
                     .cornerRadius(24.0)
             }
-            
-            Divider()
-                .padding()
-            
-            Button {
-                print("Clicado 2!")
-            } label: {
-                Text("Não tem uma conta? Clique aqui")
-                    .foregroundColor(Color.black)
-            }
         }
         
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 32)
         .background(Color.init(red: 240 / 255, green: 231 / 255, blue: 210 / 255))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
