@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignInView: View {
     
-    @ObservedObject var viewModel = SignInViewModel()
+    @StateObject var viewModel = SignInViewModel()
     
     var body: some View {
         NavigationView {
@@ -43,6 +43,11 @@ struct SignInView: View {
                     )
                     .padding(.bottom, 30)
                 
+                if viewModel.isLoading {
+                    ProgressView()
+                        .padding()
+                }
+                
                 Button {
                     viewModel.signIn()
                 } label: {
@@ -52,6 +57,9 @@ struct SignInView: View {
                         .background(Color("GreenColor"))
                         .foregroundColor(Color.white)
                         .cornerRadius(24.0)
+                }
+                .alert(isPresented: $viewModel.formInvalid) {
+                    Alert(title: Text(viewModel.alertText))
                 }
                 
                 Divider()
