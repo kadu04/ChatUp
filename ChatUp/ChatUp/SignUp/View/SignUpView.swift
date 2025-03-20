@@ -1,5 +1,5 @@
 //
-//  SignInView.swift
+//  SignUpView.swift
 //  ChatUp
 //
 //  Created by Ricardo Massaki on 19/03/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SignInView: View {
+struct SignUpView: View {
     
-    @ObservedObject var viewModel = SignInViewModel()
+    @ObservedObject var viewModel = SignUpViewModel()
     
     var body: some View {
         VStack {
@@ -17,6 +17,18 @@ struct SignInView: View {
                 .resizable()
                 .scaledToFit()
                 .padding()
+            
+            TextField("Entre com seu nome", text: $viewModel.name)
+                .autocapitalization(.none)
+                .disableAutocorrection(false)
+                .padding()
+                .background(Color.white)
+                .cornerRadius(24.0)
+                .overlay(RoundedRectangle(cornerRadius: 24.0)
+                    .strokeBorder(Color(UIColor.separator),
+                                  style: StrokeStyle(lineWidth: 1.0))
+                )
+                .padding(.bottom, 8)
             
             TextField("Entre com seu e-mail", text: $viewModel.email)
                 .autocapitalization(.none)
@@ -30,7 +42,7 @@ struct SignInView: View {
                 )
                 .padding(.bottom, 8)
             
-            SecureField("Entre com sua senha", text: $viewModel.passaword)
+            SecureField("Entre com sua senha", text: $viewModel.password)
                 .autocapitalization(.none)
                 .disableAutocorrection(false)
                 .padding()
@@ -43,9 +55,9 @@ struct SignInView: View {
                 .padding(.bottom, 30)
             
             Button {
-                viewModel.signIn()
+                viewModel.signUp()
             } label: {
-                Text("Entrar")
+                Text("Enviar")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color("GreenColor"))
@@ -57,12 +69,13 @@ struct SignInView: View {
                 .padding()
             
             Button {
-                print("Clicado2!")
+                print("Clicado 2!")
             } label: {
                 Text("Não tem uma conta? Clique aqui")
                     .foregroundColor(Color.black)
             }
         }
+        
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 32)
         .background(Color.init(red: 240 / 255, green: 231 / 255, blue: 210 / 255))
@@ -70,5 +83,5 @@ struct SignInView: View {
 }
 
 #Preview {
-    SignInView()
+    SignUpView()
 }
