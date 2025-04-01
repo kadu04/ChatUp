@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Firebase
-import FirebaseAuth
+//import FirebaseAuth
 
 @main
 struct ChatUpApp: App {
