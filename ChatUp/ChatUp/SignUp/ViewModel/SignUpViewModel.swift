@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import UIKit
 import FirebaseStorage
+import FirebaseFirestore
 
 class SignUpViewModel: ObservableObject {
     
@@ -62,8 +63,26 @@ class SignUpViewModel: ObservableObject {
         ref.putData(data, metadata: newMetadata) { metadata, err in
             ref.downloadURL { url, error in
                 self.isLoading = false
+                guard let url = url else { return }
                 print("Foto criada \(url)")
+                self.createUser(photoUrl: url)
             }
         }
+    }
+    
+    private func createUser(photoUrl: URL) {
+        Firestore.firestore().collection("users")
+            .document()
+            .setData([
+                "name": name,
+                "uuid": Auth.auth().currentUser!.uid,
+                "profileUrl": photoUrl.absoluteString
+            ]) { err in
+                self.isLoading = false
+                if err != nil {
+                    print(err!.localizedDescription)
+                    return
+                }
+            }
     }
 }
