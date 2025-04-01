@@ -7,17 +7,23 @@
 
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 @main
 struct ChatUpApp: App {
     
     init() {
         FirebaseApp.configure()
+//         Forçar para deslogar
+//         try! Auth.auth().signOut()
     }
     
     var body: some Scene {
         WindowGroup {
-            SignInView()
+            ContentView()
         }
     }
 }
+
+
+// ContentView -> tela de conteúdo
