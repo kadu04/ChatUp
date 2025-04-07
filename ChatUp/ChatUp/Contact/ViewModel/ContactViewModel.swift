@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 class ContactViewModel: ObservableObject {
     
@@ -27,10 +28,12 @@ class ContactViewModel: ObservableObject {
                 }
                 
                 for document in querySnapshot!.documents {
-                    print("ID \(document.documentID) \(document.data())")
-                    self.contacts.append(Contact(uuid: document.documentID,
-                                                 name: document.data()["name"] as! String,
-                                                 profileUrl: document.data()["profileUrl"] as! String))
+                    if Auth.auth().currentUser?.uid != document.documentID {
+                        print("ID \(document.documentID) \(document.data())")
+                        self.contacts.append(Contact(uuid: document.documentID,
+                                                     name: document.data()["name"] as! String,
+                                                     profileUrl: document.data()["profileUrl"] as! String))
+                    }
                 }
                 self.isLoading = false
             }
