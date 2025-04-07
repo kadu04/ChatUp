@@ -28,7 +28,7 @@ class MessageViewModel: ObservableObject {
                             self.contacts.removeAll()
                             self.contacts.append(Contact(uuid: document.documentID,
                                                          name: document.data()["username"] as! String,
-                                                         profileUrl: document.data()["profileUrl"] as! String,
+                                                         profileUrl: document.data()["photoUrl"] as! String,
                                                          lastMessage: document.data()["lastMessage"] as! String,
                                                          timestamp: document.data()["timestamp"] as! UInt))
                         }

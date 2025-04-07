@@ -25,5 +25,11 @@ struct ChatUpApp: App {
     }
 }
 
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 
 // ContentView -> tela de conteúdo
