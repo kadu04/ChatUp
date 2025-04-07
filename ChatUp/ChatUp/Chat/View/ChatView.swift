@@ -20,21 +20,34 @@ struct ChatView: View {
         VStack {
             ScrollViewReader { value in
                 ScrollView(showsIndicators: false) {
-                    ForEach(viewModel.messages, id: \.self) { message in
-                        MessageRow(message: message)
-                    }
-                    .onChange(of: viewModel.messages) { newValue in
-                        print("count is \(newValue)")
-                        withAnimation {
-                            value.scrollTo(bottomID)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    
                     Color.clear
                         .frame(height: 1)
                         .id(bottomID)
+                    
+                    LazyVStack {
+                        ForEach(viewModel.messages, id: \.self) { message in
+                            MessageRow(message: message)
+                                .scaleEffect(x: 1.0, y: -1.0, anchor: .center)
+                                .onAppear {
+                                    if message == viewModel.messages.last && viewModel.messages.count >= viewModel.limit {
+                                        viewModel.onAppear(contact: contact)
+                                        print("\(message)")
+                                    }
+                                }
+                        }
+                        .onChange(of: viewModel.newCount) { newValue in
+                            print("count is \(newValue)")
+                            if newValue > viewModel.messages.count {
+                                withAnimation {
+                                    value.scrollTo(bottomID)
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                    }
                 }
+                .rotationEffect(Angle(degrees: 180))
+                .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
             
             Spacer()
