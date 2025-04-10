@@ -25,10 +25,10 @@ struct MessageView: View {
                     }
                 }
             }
-            .onAppear() {
+            .onAppear {
                 viewModel.getContacts()
             }
-            .navigationTitle("Mensagens")
+            .navigationBarTitle("Mensagens")
             .toolbar {
                 ToolbarItem(id: "contacts",
                             placement: ToolbarItemPlacement.navigationBarTrailing,

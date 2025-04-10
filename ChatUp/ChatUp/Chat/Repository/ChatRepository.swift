@@ -13,7 +13,7 @@ class ChatRepository {
     
     var myName = ""
     var myPhoto = ""
-    
+        
     func fetchChat(limit: Int, contact: Contact, lastMessage: Message?, completion: @escaping (Message) -> Void) {
         let fromId = Auth.auth().currentUser!.uid
         
@@ -57,7 +57,7 @@ class ChatRepository {
                             completion(message)
                         }
                     }
-                    print("_______________________________")
+                    print("_____________________")
                 }
             }
     }
@@ -87,7 +87,7 @@ class ChatRepository {
                     .setData([
                         "uid": contact.uuid,
                         "username": contact.name,
-                        "photUrl": contact.profileUrl,
+                        "photoUrl": contact.profileUrl,
                         "timestamp": UInt(timestamp),
                         "lastMessage": text
                     ])

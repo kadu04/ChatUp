@@ -27,7 +27,7 @@ class ContactViewModel: ObservableObject {
         isLoading = true
         isLoaded = true
         
-        repo.getContatcs { contacts in
+        repo.getContacts { contacts in
             self.contacts.append(contentsOf: contacts)
             self.isLoading = false
         }

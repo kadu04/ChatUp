@@ -36,7 +36,7 @@ struct ChatView: View {
                                 }
                         }
                         .onChange(of: viewModel.newCount) { newValue in
-                            print("count is \(newValue)")
+                            print("count in \(newValue)")
                             if newValue > viewModel.messages.count {
                                 withAnimation {
                                     value.scrollTo(bottomID)
@@ -59,7 +59,7 @@ struct ChatView: View {
                 ZStack {
                     TextEditor(text: $viewModel.text)
                         .autocapitalization(.none)
-                        .disableAutocorrection(true)
+                        .disableAutocorrection(false)
                         .padding()
                         .background(Color.white)
                         .cornerRadius(24.0)
@@ -117,7 +117,7 @@ struct ViewGeometry: View {
 struct ViewSizeKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
     
-    static func reduce(value: inout CGSize, nextValue: () -> Value) {
+    static func reduce(value: inout Value, nextValue: () -> Value) {
         print("new value is \(value)")
         value = nextValue()
     }
@@ -137,8 +137,8 @@ struct MessageRow: View {
                 .background(RoundedRectangle(cornerRadius: 10)
                     .fill(!message.isMe ? Color(white: 0.95) : Color("GreenLightColor")))
                 .frame(maxWidth: 260, alignment: !message.isMe ? .leading : .trailing)
-//                .padding(.leading, message.isMe ? 0 : 50)
-//                .padding(.trailing, message.isMe ? 50 : 0)
+            //                .padding(.leading, message.isMe ? 0 : 50)
+            //                .padding(.trailing, message.isMe ? 50 : 0)
         }
         .padding(.horizontal, 2)
         .frame(maxWidth: .infinity, alignment: !message.isMe ? .leading : .trailing)

@@ -10,12 +10,12 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class ContactRepository {
-    func getContatcs(completion: @escaping ([Contact]) -> Void) {
+    func getContacts(completion: @escaping ([Contact]) -> Void) {
         var contacts: [Contact] = []
         Firestore.firestore().collection("users")
             .getDocuments { querySnapshot, error in
                 if let error = error {
-                    print("Erro ao buscar contatos \(error)")
+                    print("Erro ao buscar contatos: \(error)")
                     return
                 }
                 

@@ -41,3 +41,4 @@ class MessageRepository {
         try? Auth.auth().signOut()
     }
 }
+

@@ -18,7 +18,7 @@ class ChatViewModel: ObservableObject {
     var inserting = false
     var newCount = 0
     let limit = 20
-    
+
     private let repo: ChatRepository
     
     init(repo: ChatRepository) {
@@ -38,7 +38,7 @@ class ChatViewModel: ObservableObject {
             self.newCount = self.messages.count
         }
     }
-        
+    
     func sendMessage(contact: Contact) {
         let text = self.text.trimmingCharacters(in: .whitespacesAndNewlines)
         newCount = newCount + 1
