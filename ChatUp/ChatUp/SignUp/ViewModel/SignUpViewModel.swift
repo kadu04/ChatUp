@@ -24,6 +24,12 @@ class SignUpViewModel: ObservableObject {
     
     @Published var isLoading = false
     
+    private let repo: SignUpRepository
+    
+    init(repo: SignUpRepository) {
+        self.repo = repo
+    }
+    
     func signUp() {
         print("nome: \(name), email: \(email), senha: \(password)")
         
@@ -34,56 +40,14 @@ class SignUpViewModel: ObservableObject {
         }
         
         isLoading = true
-        Auth.auth().createUser(withEmail: email, password: password) {
-            result, err in
-            guard let user = result?.user, err == nil else {
+        
+        repo.signUp(withEmail: email, password: password, image: image, name: name) { err in
+            if let err = err {
                 self.formInvalid = true
-                self.alertText = err!.localizedDescription
+                self.alertText = err
                 print(err)
-                self.isLoading = false
-                return
             }
             self.isLoading = false
-            print("Usuário criado \(user.uid)")
-            
-            self.uploadPhoto()
         }
-    }
-    
-    private func uploadPhoto() {
-        let filename = UUID().uuidString
-        
-        guard let data = image.jpegData(compressionQuality: 0.2) else { return }
-        
-        let newMetadata = StorageMetadata()
-        newMetadata.contentType = "image/jpeg"
-        
-        let ref = Storage.storage().reference(withPath: "/images/\(filename).jpg")
-        
-        ref.putData(data, metadata: newMetadata) { metadata, err in
-            ref.downloadURL { url, error in
-                self.isLoading = false
-                guard let url = url else { return }
-                print("Foto criada \(url)")
-                self.createUser(photoUrl: url)
-            }
-        }
-    }
-    
-    private func createUser(photoUrl: URL) {
-        let id = Auth.auth().currentUser!.uid
-        Firestore.firestore().collection("users")
-            .document(id)
-            .setData([
-                "name": name,
-                "uuid": id,
-                "profileUrl": photoUrl.absoluteString
-            ]) { err in
-                self.isLoading = false
-                if err != nil {
-                    print(err!.localizedDescription)
-                    return
-                }
-            }
     }
 }
